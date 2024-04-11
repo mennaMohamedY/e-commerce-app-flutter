@@ -4,11 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../domain/entities/AllProductsResponseEntity.dart';
 import '../../../utiles/colors.dart';
 
 class ProductDetailsSliderWidget extends StatelessWidget {
 
-  List<String> commercialsImgsPathsList=[];
+  ProductsDataEntity productData;
+
+  ProductDetailsSliderWidget({required this.productData});
+  List<String>? commercialsImgsPathsList=[];
   @override
   Widget build(BuildContext context) {
     commercialsImgsPathsList=commercialsImgsPaths();
@@ -28,7 +32,7 @@ class ProductDetailsSliderWidget extends StatelessWidget {
         enlargeFactor: 0.2,
         scrollDirection: Axis.horizontal,
       ),
-      items: [0,1,2].map((i) {
+      items: commercialsImgsPathsList?.map((imgElement) {
         return Builder(
           builder: (BuildContext context) {
             return Container(
@@ -41,9 +45,9 @@ class ProductDetailsSliderWidget extends StatelessWidget {
               child: Stack(
                 alignment: AlignmentDirectional.topEnd,
                 children: [
-                  Image.asset(commercialsImgsPathsList[i],height:MediaQuery.of(context).size.height,fit:BoxFit.fill,),
+                  Image.network(imgElement,height:MediaQuery.of(context).size.height,width: double.infinity,fit:BoxFit.fill,),
 
-                  Padding(padding:EdgeInsets.all(4.h),child:
+                  Padding(padding:EdgeInsets.all(7.h),child:
                   Image.asset(AppAssets.selectedFavouritsTabIconPath)
                   )
                 ],),
@@ -53,11 +57,15 @@ class ProductDetailsSliderWidget extends StatelessWidget {
       }).toList(),
     );
   }
+
+  List<String>? commercialsImgsPaths(){
+    print("imagesListLength-> ${productData.images!.length}");
+    return productData.images;
+    //return [AppAssets.commercialImgPath1,AppAssets.commercialImgPath2,AppAssets.commercialImgPath3];
+  }
 }
 
-List<String> commercialsImgsPaths(){
-  return [AppAssets.commercialImgPath1,AppAssets.commercialImgPath2,AppAssets.commercialImgPath3];
-}
+
 
 /*
 Image.asset(commercialsImgsPathsList[i],fit:BoxFit.fill,)

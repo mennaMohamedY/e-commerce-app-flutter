@@ -27,7 +27,8 @@ class CartScreen extends StatelessWidget {
             Expanded(flex:8,child: SingleChildScrollView(child: Column(children: [
               CartItemDesignWidget()
             ],),)),
-            Expanded(flex:1,child: AddToCartAndPriceWidget())
+            ///mtnsesh de
+            //Expanded(flex:1,child: AddToCartAndPriceWidget())
           ],),
       ),);
   }

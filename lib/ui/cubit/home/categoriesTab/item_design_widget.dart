@@ -1,5 +1,6 @@
 
 
+import 'package:e_commerce_app/ui/cubit/home/productDdetails/product_detial_screen.dart';
 import 'package:e_commerce_app/ui/utiles/app_assets.dart';
 import 'package:e_commerce_app/ui/utiles/colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,8 +26,12 @@ class ItemDesignWidget extends StatelessWidget {
           alignment: AlignmentDirectional.topEnd,
           children: [
             //sizedbox or give height
-          Container(clipBehavior: Clip.hardEdge,decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(15.r),topLeft: Radius.circular(15.r),
-          )),child: Image.network(productData.imageCover??'',fit: BoxFit.fill,width: double.infinity,),),
+          InkWell(onTap: (){
+            Navigator.pushNamed(context, ProductDetailsScreen.routeName,arguments: productData);
+          },
+            child: Container(clipBehavior: Clip.hardEdge,decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(15.r),topLeft: Radius.circular(15.r),
+            )),child: Image.network(productData.imageCover??'',fit: BoxFit.fill,width: double.infinity,),),
+          ),
           Padding(padding:EdgeInsets.all(4.h),child: Image.asset(AppAssets.selectedFavouritsTabIconPath))
         ],),
       ),

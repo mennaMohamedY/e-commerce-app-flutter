@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class SizeSelector extends StatelessWidget {
   final List<String> sizes;
   final String selectedSize;
-  final void Function(String) onSizeSelected;
+  final void Function(String size) onSizeSelected;
 
   const SizeSelector(
       {required this.sizes, required this.selectedSize, required this.onSizeSelected});
@@ -37,7 +37,8 @@ class SizeSelector extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline6?.copyWith(
                           color: selectedSize == sizes[index]
                               ? Colors.white
-                              : Colors.black87),
+                              : Colors.black87,
+                      fontSize: 14),
                     ),
                   ),
                 ),
