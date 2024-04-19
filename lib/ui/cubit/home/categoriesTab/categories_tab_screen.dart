@@ -9,44 +9,55 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../data/api_manager/apiConstants.dart';
+import '../../../../domain/custom_alertdialog.dart';
+import '../../../../domain/sharedpreferences.dart';
 import '../../../utiles/app_assets.dart';
 
 class CategoriesTabScreen extends StatefulWidget {
-
-
   @override
   State<CategoriesTabScreen> createState() => _CategoriesTabScreenState();
 }
 
 class _CategoriesTabScreenState extends State<CategoriesTabScreen> {
-  CategoriesTabViewModel categoriesTabViewModel=CategoriesTabViewModel(allProductsUseCase: allProductsUseCaseInjection());
+  CategoriesTabViewModel categoriesTabViewModel=CategoriesTabViewModel(allProductsUseCase: allProductsUseCaseInjection(),cartUseCase: cartUseCaseInjection(), favouritUseCase: favouritUseCaseInjection());
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CategoriesTabViewModel,AllProductsStates>(
-      bloc: categoriesTabViewModel..getAllProducts(),
+    return BlocProvider<CategoriesTabViewModel>(
+        create: (context)=> categoriesTabViewModel..getAllProducts(),
+            child:BlocBuilder<CategoriesTabViewModel,AllProductsStates>(
+        //bloc: categoriesTabViewModel..getAllProducts(),
         builder: (context,state){
-        return SafeArea(
-          child: Padding(padding: EdgeInsets.only(left: 16),
-            child:SingleChildScrollView(
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(padding: EdgeInsets.only(top: 6.h,bottom: 18.h ),child: Image.asset(AppAssets.routeMarkPath),),
-                  SearchAndCartWidget(),
+          return SafeArea(
+            child: Padding(padding: EdgeInsets.only(left: 16),
+              child:SingleChildScrollView(
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(padding: EdgeInsets.only(top: 6.h,bottom: 18.h ),child: Image.asset(AppAssets.routeMarkPath),),
+                    // (state is ItemAddedToCartSuccessfullyState)?
+                    // SearchAndCartWidget():SearchAndCartWidget(),
+                    SearchAndCartWidget(cartItemsCount: categoriesTabViewModel.cartItemsCount,),
+                    (categoriesTabViewModel.productsDataList.isEmpty)?Center(child: CircularProgressIndicator(),):
+                    ItemsListWidget(productsDataList: categoriesTabViewModel.productsDataList,onAddItemClickListener: (productId){
+                      print("Item Added To Cart ");
+                      categoriesTabViewModel.addItemToCart(productId);
+                      CustomAlertDialog.ShowCustomeDialog(context: context, content: "added successfully",postitveActionTxt: "Ok",);
+                    },
+                    onAddToFavouritsClickListener: (productId){
+                      print("Item Added To Favourits ");
+                      categoriesTabViewModel.addItemToFavourit(productId);
+                      CustomAlertDialog.ShowCustomeDialog(context: context, content: "item added to Favourits successfully",postitveActionTxt: "Ok",);
+                    },),
 
-                  (categoriesTabViewModel.productsDataList.isEmpty)?Center(child: CircularProgressIndicator(),):
-                  ItemsListWidget(productsDataList: categoriesTabViewModel.productsDataList,),
-                  //(state is AllProductsSuccessState )?Text("length-> ${state.productsDataList.length}"):Text("0")
+                    //(state is AllProductsSuccessState )?Text("length-> ${state.productsDataList.length}"):Text("0")
+                    SizedBox(height: MediaQuery.of(context).size.height*0.2,)
+                  ],),
+              ) ,),
+          );
+        })
 
-                  SizedBox(height: MediaQuery.of(context).size.height*0.2,)
-
-
-
-                ],),
-            ) ,),
-        );
-        });
-
+    );
   }
 }
 
@@ -65,4 +76,51 @@ SafeArea(
             ],),
         ) ,),
     );
+ */
+/*
+    return BlocBuilder<CategoriesTabViewModel,AllProductsStates>(
+      bloc: categoriesTabViewModel..getAllProducts(),
+        builder: (context,state){
+        return SafeArea(
+          child: Padding(padding: EdgeInsets.only(left: 16),
+            child:SingleChildScrollView(
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(padding: EdgeInsets.only(top: 6.h,bottom: 18.h ),child: Image.asset(AppAssets.routeMarkPath),),
+                  // (state is ItemAddedToCartSuccessfullyState)?
+                  // SearchAndCartWidget():SearchAndCartWidget(),
+                  SearchAndCartWidget(cartItemsCount: categoriesTabViewModel.cartItemsCount,),
+                  (categoriesTabViewModel.productsDataList.isEmpty)?Center(child: CircularProgressIndicator(),):
+                  ItemsListWidget(productsDataList: categoriesTabViewModel.productsDataList,onAddItemClickListener: (productId){
+                    print("Item Added To Cart ");
+                    categoriesTabViewModel.addItemToCart(productId);
+                    // var n=SharedPreferenceClass.getData(AppConstants.cartItemsCount);
+                    //
+                    // print("before--------------->${n.toString()}");
+                    //
+                    // SharedPreferenceClass.saveData(AppConstants.cartItemsCount, categoriesTabViewModel.cartItemsCount);
+                    // // var n=SharedPreferenceClass.getData(AppConstants.cartItemsCount);
+                    // print("after--------------->${n.toString()}");
+
+
+                    CustomAlertDialog.ShowCustomeDialog(context: context, content: "added successfully",postitveActionTxt: "Ok",
+                      positiveButtonAction: (){
+                      // setState(() {
+                      //
+                      // });
+                      }
+                    );
+                  },),
+
+                  //(state is AllProductsSuccessState )?Text("length-> ${state.productsDataList.length}"):Text("0")
+
+                  SizedBox(height: MediaQuery.of(context).size.height*0.2,)
+
+
+
+                ],),
+            ) ,),
+        );
+        });
+
  */

@@ -3,10 +3,14 @@ import 'package:dartz/dartz.dart';
 import 'package:e_commerce_app/data/api_manager/apiManager.dart';
 import 'package:e_commerce_app/data/model_DTO/response/AuthRegisterResponse.dart';
 import 'package:e_commerce_app/data/model_DTO/response/ErrorResponse.dart';
+import 'package:e_commerce_app/domain/entities/AddToFavouritsResponseEntity.dart';
 import 'package:e_commerce_app/domain/entities/AllProductsResponseEntity.dart';
 import 'package:e_commerce_app/domain/entities/AuthRegisterResponseEntity.dart';
+import 'package:e_commerce_app/domain/entities/AddToCartResponseEntity.dart';
 import 'package:e_commerce_app/domain/entities/CategoriesResponseEntity.dart';
 import 'package:e_commerce_app/domain/entities/Failures.dart';
+import 'package:e_commerce_app/domain/entities/GetCartItemsResponseEntity.dart';
+import 'package:e_commerce_app/domain/entities/GetFavouritsTabResponseEntity.dart';
 import 'package:e_commerce_app/domain/repositories/data_sources/register_datasource_interface.dart';
 
 class RegisterRemoteDataSourceImpl extends RegisterRemoteDataSourceInterface{
@@ -76,5 +80,51 @@ class RegisterRemoteDataSourceImpl extends RegisterRemoteDataSourceInterface{
             (l) => Left(l),
             (r) => Right(r));
   }
+
+  @override
+  Future<Either<Failures, AddToCartResponseEntity>> getAddToCart(String productId)async {
+
+    var either=await apiManager.addItemToCart(productId);
+    return either.fold(
+            (l) => Left(l),
+            (r) => Right(r));
+  }
+
+
+  @override
+  Future<Either<Failures, GetCartItemsResponseEntity>> getCartItemsToCart()async {
+
+    var either=await apiManager.getCartItems();
+    return either.fold(
+            (l) => Left(l),
+            (r) => Right(r));
+  }
+
+  @override
+  Future<Either<Failures, GetCartItemsResponseEntity>> deleteCartItem(String productID)async {
+
+    var either=await apiManager.deleteCartItem(productID);
+    return either.fold(
+            (l) => Left(l),
+            (r) => Right(r));
+  }
+
+  @override
+  Future<Either<Failures, AddToFavouritsResponseEntity>> AddToFavourits(String productID)async {
+
+    var either= await apiManager.addItemToFavourits(productID);
+    return either.fold(
+            (l) => Left(l),
+            (r) => Right(r));
+  }
+
+  @override
+  Future<Either<Failures, GetFavouritsTabResponseEntity>> getFavouritsItems()async {
+    var either= await apiManager.getFavouritsItems();
+    return either.fold(
+            (l) => Left(l),
+            (r) => Right(r));
+  }
+
 
 }

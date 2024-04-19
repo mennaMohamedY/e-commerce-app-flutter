@@ -14,6 +14,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../data/api_manager/apiConstants.dart';
+import '../../../../domain/sharedpreferences.dart';
+
 class HomeTabScreen extends StatefulWidget {
 
   @override
@@ -23,13 +26,18 @@ class HomeTabScreen extends StatefulWidget {
 class _HomeTabScreenState extends State<HomeTabScreen> {
   HomeTabViewModel homeTabViewModel=HomeTabViewModel(categoriesUseCase: categoriesUseCaseInjection(),brandsUseCase: brandsUseCaseInjection());
 
+  var cartItemsCount='';
   @override
   void initState() {
     super.initState();
     //homeTabViewModel.getCategories();
+    cartItemsCount=SharedPreferenceClass.getData(AppConstants.cartItemsCount).toString();
+
   }
   @override
   Widget build(BuildContext context) {
+    cartItemsCount=SharedPreferenceClass.getData(AppConstants.cartItemsCount).toString();
+
     return BlocBuilder<HomeTabViewModel,HomeTabStates>(
       bloc: homeTabViewModel..getBrands()..getCategories(),
         builder:(context,state){
@@ -39,7 +47,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(padding: EdgeInsets.only(top: 6.h,bottom: 18.h ),child: Image.asset(AppAssets.routeMarkPath),),
-                SearchAndCartWidget(),
+                SearchAndCartWidget(cartItemsCount: cartItemsCount,),
                 Padding(padding:EdgeInsets.only(top: 16.h,bottom: 16.h,right: 16.w),child: CommercialsSliderWidget()),
                 Padding(padding:EdgeInsets.only(right: 16.h,bottom: 16.h),child: TitlesTextRowWidget(title: "Categories")),
                 (homeTabViewModel.categoriesDataList.isEmpty)? CircularProgressIndicator():CategoresListWidget(categoriesResponseData: homeTabViewModel.categoriesDataList!,),

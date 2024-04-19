@@ -1,5 +1,8 @@
 
+import 'package:e_commerce_app/data/api_manager/apiConstants.dart';
 import 'package:e_commerce_app/domain/dependency_injection.dart';
+import 'package:e_commerce_app/domain/sharedpreferences.dart';
+import 'package:e_commerce_app/ui/cubit/home/home_screen.dart';
 import 'package:e_commerce_app/ui/cubit/login/login_viewmodel.dart';
 import 'package:e_commerce_app/ui/cubit/register/register_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,8 +41,10 @@ class _LoginScreenState extends State<LoginScreen> {
         }
         else if(state is SucessState){
           CustomAlertDialog.HideDialog(context);
-          CustomAlertDialog.ShowCustomeDialog(context: context,
-              content: 'success name: \n ${state.authResponseEntity.user?.name}');
+          SharedPreferenceClass.saveData(AppConstants.userToken, state.authResponseEntity.token);
+          Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+          // CustomAlertDialog.ShowCustomeDialog(context: context,
+          //     content: 'success name: \n ${state.authResponseEntity.user?.name}');
         }
       },
       child: Scaffold(

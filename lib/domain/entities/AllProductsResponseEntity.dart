@@ -62,7 +62,7 @@ class ProductsDataEntity {
   String? imageCover;
   CategoryEntity? category;
   BrandEntity? brand;
-  double? ratingsAverage;
+  num? ratingsAverage;
   String? createdAt;
   String? updatedAt;
 

@@ -14,6 +14,4 @@ class CategoriesUserCase{
     return registerRepositoryInterface.Categories();
   }
 
-
-
 }

@@ -1,7 +1,9 @@
 
+import 'package:e_commerce_app/data/api_manager/apiConstants.dart';
 import 'package:e_commerce_app/ui/cubit/home/profileTab/custome_textfieldprofile.dart';
 import 'package:e_commerce_app/ui/cubit/home/profileTab/profiletab_viewmodel.dart';
 import 'package:e_commerce_app/ui/utiles/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,7 +21,13 @@ class ProfileTabScreen extends StatelessWidget {
           child: Column(crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(padding: EdgeInsets.only(top: 6.h,bottom: 18.h ),child: Image.asset(AppAssets.routeMarkPath),),
-              Text("Welcome, Menna",style: TextStyle(color: AppColors.PrimaryColor,fontSize: 19,fontWeight: FontWeight.bold),),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children:[
+                Text("Welcome, Menna",style: TextStyle(color: AppColors.PrimaryColor,fontSize: 19,fontWeight: FontWeight.bold),),
+                 InkWell(onTap: (){
+                   profileTabViewModel.logout(AppConstants.userToken,context);
+                 },
+                   child:  Icon(Icons.logout,color: AppColors.PrimaryColor,size: 25,),)]),
               Text("menna@route.com",style: TextStyle(color: AppColors.PrimaryColor),),
               CustomeTextFieldProfile(textFieldTitle: "Your full name", txtController: profileTabViewModel.fullNameController, hintText: "Menna Mohamed Yousef", validator: (value){},suffixIcon: Icon(Icons.edit_note,color: AppColors.PrimaryColor,),),
               SizedBox(height: 6.h,),

@@ -8,12 +8,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../domain/dependency_injection.dart';
 import '../../../../domain/entities/AllProductsResponseEntity.dart';
+import 'cubit/categoriesTabViewModel.dart';
 
 class ItemDesignWidget extends StatelessWidget {
 
   ProductsDataEntity productData;
-  ItemDesignWidget({required this.productData});
+  bool itemAdded=false;
+  //Function onAddClickListener(String productID);
+  final void Function(String productId) onAddItemClickListener;
+  Function(String productID) onAddToFavouritClickListener;
+
+  ItemDesignWidget({required this.productData,required this.onAddItemClickListener ,required this.onAddToFavouritClickListener});
+
+  CategoriesTabViewModel categoriesTabViewModel=CategoriesTabViewModel(allProductsUseCase: allProductsUseCaseInjection(),cartUseCase: cartUseCaseInjection(), favouritUseCase: favouritUseCaseInjection());
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +41,12 @@ class ItemDesignWidget extends StatelessWidget {
             child: Container(clipBehavior: Clip.hardEdge,decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(15.r),topLeft: Radius.circular(15.r),
             )),child: Image.network(productData.imageCover??'',fit: BoxFit.fill,width: double.infinity,),),
           ),
-          Padding(padding:EdgeInsets.all(4.h),child: Image.asset(AppAssets.selectedFavouritsTabIconPath))
+          Padding(padding:EdgeInsets.all(4.h),child: InkWell(onTap:(){
+
+            itemAdded=true;
+            //categoriesTabViewModel.addItemToFavourit(productData.id??'');
+            onAddToFavouritClickListener(productData.id??'');
+          },child: Image.asset((itemAdded)?AppAssets.favouritItem:AppAssets.selectedFavouritsTabIconPath)))
         ],),
       ),
       Expanded(flex:1,child: Padding(padding: EdgeInsets.only(left: 6.w,top: 4.h),child: Text("${productData.slug}",style: TextStyle(color: AppColors.PrimaryColor,fontWeight: FontWeight.w500,fontSize: 15),))),
@@ -51,13 +65,17 @@ class ItemDesignWidget extends StatelessWidget {
           child: Padding(padding: EdgeInsets.symmetric(horizontal: 4.w),child: Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,
             children: [
             Row(children: [
-              ///hia de
-              Text("4.8",style: TextStyle(color: AppColors.PrimaryColor,)),
+              Text("${productData.ratingsAverage}",style: TextStyle(color: AppColors.PrimaryColor,)),
               Padding(padding: EdgeInsets.only(left: 4.w),child:
               Icon(Icons.star,color: Colors.yellow,)
                 ,)
             ],),
-              InkWell(onTap:(){},child: Icon(Icons.add_circle,color: AppColors.PrimaryColor,))
+              InkWell(onTap:(){
+                //categoriesTabViewModel.addItemToCart(productData.id!);
+               // print("item added to cart");
+                //onAddClickListener.call();
+                onAddItemClickListener(productData.id!);
+              },child: Icon(Icons.add_circle,color: AppColors.PrimaryColor,))
           ],),),
         ),
         SizedBox(height: 6.h,)

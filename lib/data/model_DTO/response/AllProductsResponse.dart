@@ -64,7 +64,7 @@ class Data extends ProductsDataEntity {
     super.imageCover,
     super.category,
     super.brand,
-    //super.ratingsAverage,
+    super.ratingsAverage,
     super.createdAt,
     super.updatedAt,
       });
@@ -88,7 +88,7 @@ class Data extends ProductsDataEntity {
     imageCover = json['imageCover'];
     category = json['category'] != null ? Category.fromJson(json['category']) : null;
     brand = json['brand'] != null ? Brand.fromJson(json['brand']) : null;
-    //ratingsAverage = json['ratingsAverage'];
+    ratingsAverage = json['ratingsAverage'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }

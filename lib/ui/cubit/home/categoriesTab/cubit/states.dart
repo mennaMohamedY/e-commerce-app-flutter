@@ -1,8 +1,9 @@
 
 
 import '../../../../../domain/entities/AllProductsResponseEntity.dart';
+import '../../cart/cartScreenStates.dart';
 
-abstract class AllProductsStates{}
+abstract class AllProductsStates {}
 
 class AllProductsInitialState extends AllProductsStates{}
 class AllProductsLoadingState extends AllProductsStates{
@@ -16,4 +17,21 @@ class AllProductsSuccessState extends AllProductsStates{
 class AllProductsFailureState extends AllProductsStates{
   String FailureMsg;
   AllProductsFailureState({required this.FailureMsg});
+}
+class ItemAddedToCartSuccessfullyState extends AllProductsStates{
+  String successMsg;
+  ItemAddedToCartSuccessfullyState({required this.successMsg});
+}
+class ItemAddedToCartErrorState extends AllProductsStates{
+  String errorMsg;
+  ItemAddedToCartErrorState({required this.errorMsg});
+}
+
+class ItemAddedToFavouritsSuccessfullyState extends AllProductsStates{
+  String successMsg;
+  ItemAddedToFavouritsSuccessfullyState({required this.successMsg});
+}
+class ItemAddedToFavouritsErrorState extends AllProductsStates{
+  String errorMsg;
+  ItemAddedToFavouritsErrorState({required this.errorMsg});
 }

@@ -7,7 +7,9 @@ import 'package:e_commerce_app/domain/repositories/repository/register_repo_inte
 import 'package:e_commerce_app/domain/use_cases/LoginUseCase.dart';
 import 'package:e_commerce_app/domain/use_cases/allProductsUseCase.dart';
 import 'package:e_commerce_app/domain/use_cases/brandsUseCase.dart';
+import 'package:e_commerce_app/domain/use_cases/cartUseCase.dart';
 import 'package:e_commerce_app/domain/use_cases/categoriesUseCase.dart';
+import 'package:e_commerce_app/domain/use_cases/favouritUseCase.dart';
 import 'package:e_commerce_app/domain/use_cases/register.dart';
 
 ///viewmodel -> usecase
@@ -32,6 +34,13 @@ AllProductsUseCase allProductsUseCaseInjection(){
   return AllProductsUseCase(registerRepositoryInterface: registerRepositoryInterfaceInjection());
 }
 
+FavouritUseCase favouritUseCaseInjection(){
+  return FavouritUseCase(registerRepositoryInterface: registerRepositoryInterfaceInjection());
+}
+
+CartUseCase cartUseCaseInjection(){
+  return CartUseCase(registerRepositoryInterface: registerRepositoryInterfaceInjection());
+}
 
 BrandsUseCase brandsUseCaseInjection(){
   return BrandsUseCase(registerRepositoryInterface: registerRepositoryInterfaceInjection());

@@ -43,6 +43,7 @@ dependencies:
   connectivity_plus: ^5.0.2
   carousel_slider: ^4.2.1
   read_more_text: ^0.0.5
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

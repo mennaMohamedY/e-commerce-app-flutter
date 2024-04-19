@@ -1,5 +1,6 @@
 
 
+import 'package:e_commerce_app/ui/cubit/home/home_screen.dart';
 import 'package:e_commerce_app/ui/cubit/register/custome_textfield.dart';
 import 'package:e_commerce_app/ui/cubit/register/register_states.dart';
 import 'package:e_commerce_app/ui/cubit/register/register_viewmodel.dart';
@@ -42,8 +43,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           }
           else if(state is SucessState){
             CustomAlertDialog.HideDialog(context);
-            CustomAlertDialog.ShowCustomeDialog(context: context,
-                content: 'success name: \n ${state.authResponseEntity.user?.name}');
+            Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+            // CustomAlertDialog.ShowCustomeDialog(context: context,
+            //     content: 'success name: \n ${state.authResponseEntity.user?.name}');
           }
         },
       child: Scaffold(

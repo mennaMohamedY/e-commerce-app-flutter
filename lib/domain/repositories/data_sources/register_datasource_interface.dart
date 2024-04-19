@@ -6,8 +6,12 @@ import 'package:e_commerce_app/domain/entities/Failures.dart';
 
 import '../../../data/model_DTO/response/AuthRegisterResponse.dart';
 import '../../../data/model_DTO/response/ErrorResponse.dart';
+import '../../entities/AddToFavouritsResponseEntity.dart';
 import '../../entities/AllProductsResponseEntity.dart';
+import '../../entities/AddToCartResponseEntity.dart';
 import '../../entities/CategoriesResponseEntity.dart';
+import '../../entities/GetCartItemsResponseEntity.dart';
+import '../../entities/GetFavouritsTabResponseEntity.dart';
 
 abstract class RegisterRemoteDataSourceInterface{
   Future<Either<Failures,AuthRegisterResponseEntity>> Register(String fullName,String phoneNum,String email,String passWord,String repassword);
@@ -18,6 +22,15 @@ abstract class RegisterRemoteDataSourceInterface{
   Future<Either<Failures,CategoriesResponseEntity>> brandss();
 
   Future<Either<Failures,AllProductsResponseEntity>> allProducts();
+
+  Future<Either<Failures,AddToCartResponseEntity>> getAddToCart(String productId);
+  Future<Either<Failures,GetCartItemsResponseEntity>> getCartItemsToCart();
+  Future<Either<Failures,GetCartItemsResponseEntity>> deleteCartItem(String productID);
+
+  Future<Either<Failures,AddToFavouritsResponseEntity>> AddToFavourits(String productID);
+  Future<Either<Failures,GetFavouritsTabResponseEntity>> getFavouritsItems();
+
+
 
 
 
