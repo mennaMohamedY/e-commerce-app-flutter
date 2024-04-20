@@ -68,27 +68,29 @@ class FavouritsData extends FavouritsDataEntity {
     super.v,
       });
   FavouritsData.fromJson(dynamic json) {
-    sold = json['sold'];
-    images = json['images'] != null ? json['images'].cast<String>() : [];
-    if (json['subcategory'] != null) {
-      subcategory = [];
-      json['subcategory'].forEach((v) {
-        subcategory?.add(FavouritsSubcategory.fromJson(v));
-      });
-    }
-    ratingsQuantity = json['ratingsQuantity'];
-    id = json['_id'];
-    title = json['title'];
-    slug = json['slug'];
-    description = json['description'];
-    quantity = json['quantity'];
-    price = json['price'];
-    imageCover = json['imageCover'];
-    category = json['category'] != null ? FavouritsCategory.fromJson(json['category']) : null;
-    brand = json['brand'] != null ? FavouritsBrand.fromJson(json['brand']) : null;
-    ratingsAverage = json['ratingsAverage'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
+  sold = json['sold'];
+  images = json['images'] != null ? json['images'].cast<String>() : [];
+  if (json['subcategory'] != null) {
+  subcategory = [];
+  json['subcategory'].forEach((v) {
+  subcategory?.add(FavouritsSubcategory.fromJson(v));
+  });
+  }
+  ratingsQuantity = json['ratingsQuantity'];
+  id = json['_id'];
+  title = json['title'];
+  slug = json['slug'];
+  description = json['description'];
+  quantity = json['quantity'];
+  price = json['price'];
+  imageCover = json['imageCover'];
+  category = json['category'] != null ? FavouritsCategory.fromJson(json['category']) : null;
+  brand = json['brand'] != null ? FavouritsBrand.fromJson(json['brand']) : null;
+  ratingsAverage = json['ratingsAverage'];
+  createdAt = json['createdAt'];
+  updatedAt = json['updatedAt'];
+  v = json['__v'];
+  id = json['id'];
   }
 
 }

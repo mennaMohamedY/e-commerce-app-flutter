@@ -70,7 +70,6 @@ class ApiManager{
     }
 
   }
-
   Future<Either<Failures,AuthRegisterResponse>> Login(String email,String passWord)async{
     //first we need to check the connectivity becouse if it's not connected then the
     //app won't work
@@ -194,9 +193,7 @@ class ApiManager{
       //no connection
       return Left(NetworkFailure(errorMsg: "No Internet Connection!"));
     }
-
   }
-
   Future<Either<Failures,AllProductsResponse>> getAllProducts()async{
     //first we need to check the connectivity becouse if it's not connected then the
     //app won't work
@@ -285,7 +282,6 @@ class ApiManager{
       return Left(NetworkFailure(errorMsg: "No Internet Connection!"));
     }
   }
-
   Future<Either<Failures,GetCartItemsResponse>> getCartItems()async {
     //first we need to check the connectivity becouse if it's not connected then the
     //app won't work
@@ -328,7 +324,6 @@ class ApiManager{
       return Left(NetworkFailure(errorMsg: "No Internet Connection!"));
     }
   }
-
   Future<Either<Failures,GetCartItemsResponse>> deleteCartItem(String productID)async {
     //first we need to check the connectivity becouse if it's not connected then the
     //app won't work
@@ -372,7 +367,6 @@ class ApiManager{
       return Left(NetworkFailure(errorMsg: "No Internet Connection!"));
     }
   }
-
 
   Future<Either<Failures,AddToFavouritsResponse>> addItemToFavourits(String productID)async {
     //first we need to check the connectivity becouse if it's not connected then the
@@ -419,7 +413,6 @@ class ApiManager{
       return Left(NetworkFailure(errorMsg: "No Internet Connection!"));
     }
   }
-
   Future<Either<Failures,GetFavouritsTabResponse>> getFavouritsItems()async {
     //first we need to check the connectivity becouse if it's not connected then the
     //app won't work
@@ -454,6 +447,45 @@ class ApiManager{
         print('status code is Failure ${response.statusCode}');
         return Left(ServerFailure(errorMsg:favouritsResponse.message));
       }
+    } else {
+      print('status code is Failure ');
+      //no connection
+      return Left(NetworkFailure(errorMsg: "No Internet Connection!"));
+    }
+  }
+  Future<Either<Failures,AddToFavouritsResponse>> deleteItemFromFavourits(String productID)async {
+    //first we need to check the connectivity becouse if it's not connected then the
+    //app won't work
+    var connectivityResult = await Connectivity().checkConnectivity();// User defined class
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+
+      var url = Uri.https(
+          ApiConstants.baseUrl,
+          '${ApiConstants.wishListEndPoint}/${productID}'
+      );
+
+      var userToken= SharedPreferenceClass.getData(AppConstants.userToken).toString();
+
+      var response=await http.delete(url,headers:{
+        AppConstants.userToken:userToken
+      });
+
+      print("response isEmpty?${response.body.isEmpty}");
+      var body=response.body;
+      var json=jsonDecode(body);
+      var favResponse=AddToFavouritsResponse.fromJson(json);
+
+      if(response.statusCode >=200 && response.statusCode <300){
+        //success
+        print('brands status code is success ${response.statusCode}');
+        print('lengthhhh->>>>>${favResponse.data?.length}');
+        return Right(favResponse);
+      }
+      else{
+        print('status code is Failure ${response.statusCode}');
+        return Left(ServerFailure(errorMsg:favResponse.message));
+      }
 
     } else {
       print('status code is Failure ');
@@ -462,5 +494,50 @@ class ApiManager{
       return Left(NetworkFailure(errorMsg: "No Internet Connection!"));
     }
   }
+  Future<Either<Failures,GetCartItemsResponse>> updateCartItem(String productID,int newQuantity)async {
+    //first we need to check the connectivity becouse if it's not connected then the
+    //app won't work
+    var connectivityResult = await Connectivity().checkConnectivity();// User defined class
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+
+      var url = Uri.https(
+          ApiConstants.baseUrl,
+          '${ApiConstants.cartEndPoint}/${productID}'
+      );
+
+      var userToken= SharedPreferenceClass.getData(AppConstants.userToken).toString();
+
+      var response=await http.put(url,body: {
+        "count":"${newQuantity}"
+      },
+          headers:{
+        AppConstants.userToken:userToken
+      });
+
+      print("response isEmpty?${response.body.isEmpty}");
+      var body=response.body;
+      var json=jsonDecode(body);
+      var updatedCartResponse=GetCartItemsResponse.fromJson(json);
+
+      if(response.statusCode >=200 && response.statusCode <300){
+        //success
+        print('brands status code is success ${response.statusCode}');
+        print('lengthhhh->>>>>${updatedCartResponse.data?.products?.length}');
+        return Right(updatedCartResponse);
+      }
+      else{
+        print('status code is Failure ${response.statusCode}');
+        return Left(ServerFailure(errorMsg:updatedCartResponse.message));
+      }
+
+    } else {
+      print('status code is Failure ');
+
+      //no connection
+      return Left(NetworkFailure(errorMsg: "No Internet Connection!"));
+    }
+  }
+
 
 }

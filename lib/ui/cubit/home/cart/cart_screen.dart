@@ -66,6 +66,10 @@ class _CartScreenState extends State<CartScreen> {
                           return CartItemDesignWidget(cartItem: state.cartItemsList[index],onDeleteClickListener: (productId){
                             cartScreenViewModel.deleteCartItem(productId);
                             CustomAlertDialog.ShowCustomeDialog(context: context, content: "Item Deleted Successfully",postitveActionTxt: "Ok");
+                          },onDecrementClickListener: (productID,newQuantity){
+                            cartScreenViewModel.updateCartItem(productID, newQuantity);
+                          },onIncrementClickListener: (productID,newQuantity){
+                            cartScreenViewModel.updateCartItem(productID, newQuantity);
                           },);
                         }),
                   ):

@@ -60,7 +60,8 @@ class CategoriesTabViewModel extends Cubit<AllProductsStates>{
         },
             (r) {
           //cartItemsCount=r.numOfCartItems!.toInt();
-          print("in categorys vm cartitemscount----->${cartItemsCount}");
+              print("Favourits lengthhhhh > beforee ${r.data?.length}");
+              print("in categorys vm cartitemscount----->${cartItemsCount}");
           emit(ItemAddedToFavouritsSuccessfullyState(successMsg: "Item Added to Cart Successfully"));
         });
   }

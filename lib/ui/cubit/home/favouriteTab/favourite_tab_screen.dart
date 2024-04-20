@@ -46,22 +46,26 @@ class _FavouriteTabScreenState extends State<FavouriteTabScreen> {
                   SearchAndCartWidget(cartItemsCount: cartItemsCount,),
                   SizedBox(height: 24.h,),
                   //FavouritItemDesignWidget()
-                  //(state is FavouritsTabLoadingState)?CircularProgressIndicator():
+                  //(state is FavouritsTabSuccessState)?
                   favouritsTabViewModel.favouritItemsList!.isEmpty?CircularProgressIndicator():
-              
+
                   Expanded(
                     child: ListView.builder(scrollDirection:Axis.vertical,
                         itemBuilder: (context,index){
                                   
                       return //Text("hiiii ${favouritsTabViewModel.favouritItemsList?.length}");
+                        //favouritsTabViewModel.favouritItemsList![index]
                         FavouritItemDesignWidget(itemData: favouritsTabViewModel.favouritItemsList![index], onaddItemToCartClickListener: (productID){
                           favouritsTabViewModel.addItemToCart(productID);
                           CustomAlertDialog.ShowCustomeDialog(context: context, content: "item added to Cart successfully",postitveActionTxt: "Ok",);
-
-
+                        },onFavIconClickListener: (productID){
+                          favouritsTabViewModel.deleteItemFromFavs(productID);
+                          CustomAlertDialog.ShowCustomeDialog(context: context, content: "item Removed from Favourits Successfully",postitveActionTxt: "Ok",);
                         },);
                     },itemCount: favouritsTabViewModel.favouritItemsList?.length,),
                   )
+                      //favouritsTabViewModel.favouritItemsList?.length
+                  //CircularProgressIndicator()
 
               
               

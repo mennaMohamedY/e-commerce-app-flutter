@@ -126,5 +126,22 @@ class RegisterRemoteDataSourceImpl extends RegisterRemoteDataSourceInterface{
             (r) => Right(r));
   }
 
+  @override
+  Future<Either<Failures, AddToFavouritsResponseEntity>> deleteItemFromFavs(String productID)async {
+
+    var either=await apiManager.deleteItemFromFavourits(productID);
+    return either.fold(
+            (l) => Left(l),
+            (r) => Right(r));
+  }
+
+  @override
+  Future<Either<Failures, GetCartItemsResponseEntity>> updateCartItem(String productID, int newQuantity) async{
+    var either=await apiManager.updateCartItem(productID, newQuantity);
+    return either.fold(
+            (l) => Left(l),
+            (r) => Right(r));
+  }
+
 
 }

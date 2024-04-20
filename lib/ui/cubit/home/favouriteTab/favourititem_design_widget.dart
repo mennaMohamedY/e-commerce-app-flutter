@@ -12,7 +12,9 @@ class FavouritItemDesignWidget extends StatelessWidget {
 
   FavouritsDataEntity itemData;
   Function(String productID) onaddItemToCartClickListener;
-  FavouritItemDesignWidget({required this.itemData, required this.onaddItemToCartClickListener});
+  Function(String productID) onFavIconClickListener;
+
+  FavouritItemDesignWidget({required this.itemData, required this.onaddItemToCartClickListener,required this.onFavIconClickListener});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -27,7 +29,9 @@ class FavouritItemDesignWidget extends StatelessWidget {
             child: Column(children: [
               Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,children: [
                 Expanded(child: SingleChildScrollView(scrollDirection:Axis.horizontal,child: Text("${itemData.slug}",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: AppColors.PrimaryColor),))),
-                Padding(padding:EdgeInsets.only(right: 9.w),child: Image.asset(AppAssets.favouritItem))
+                Padding(padding:EdgeInsets.only(right: 9.w),child: InkWell(onTap:(){
+                  onFavIconClickListener(itemData.id??'');
+                },child: Image.asset(AppAssets.favouritItem)))
               ],),
               Row(children: [
                 Icon(Icons.circle,color: Colors.deepOrange,size: 12,),

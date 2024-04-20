@@ -10,9 +10,6 @@ class ApiConstants{
   static const String cartEndPoint = "/api/v1/cart";
   static const String wishListEndPoint = "/api/v1/wishlist";
 
-
-
-
 }
 
 class AppConstants{

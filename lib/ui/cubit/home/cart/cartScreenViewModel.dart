@@ -53,4 +53,14 @@ class CartScreenViewModel extends Cubit<CartScreenStates>{
 
             });
   }
+
+  void updateCartItem(String productID,int newQuantity)async{
+    var either= await cartUseCase.updateCartItem(productID, newQuantity);
+    either.fold(
+            (l) => emit(CartScreenFailureState(failureMsg: "Failed ${l.errorMsg}")),
+            (r) {
+              totalPrice=r.data!.totalCartPrice.toString();
+              emit(CartScreenSuccessState(cartItemsList: r.data?.products??[]));
+            });
+  }
 }

@@ -31,15 +31,30 @@ class FavouritsTabViewModel extends Cubit<FavouritsTabStates>{
     var either= await cartUseCase.AddItemsToCart(productID);
     either.fold(
             (l) {
-          emit(ItemAddedErrorState(errorMsg: "${l.errorMsg!}"));
-        },
+              emit(FavouritsTabFailureState(failureMsg: "Error! ${l.errorMsg}"));        },
             (r) {
           //cartItemsCount=r.numOfCartItems!.toInt();
           SharedPreferenceClass.saveData(AppConstants.cartItemsCount, r.numOfCartItems!.toInt());
           var cartItemsCount=SharedPreferenceClass.getData(AppConstants.cartItemsCount).toString();
           print("in categorys vm cartitemscount----->${cartItemsCount}");
+
           emit(ItemAddedToCartSuccessState(successMsg: "Item Added to Cart Successfully"));
         });
+  }
+  
+  void deleteItemFromFavs(String productID)async{
+    var either=await favouriteUseCase.deletItemFromFavs(productID);
+    either.fold(
+            (l) => emit(FavouritsTabFailureState(failureMsg: "Error! ${l.errorMsg}")),
+            (r) {
+              //favouritItemsList=r.data??[];
+              print("Favourits lengthhhhh > after ${r.data?.length}");
+
+              getFavouritsItems();
+              emit(ItemDeletedSuccessfullyState(successMsg: "Deleted Successfully"));
+              //emit(FavouritsTabSuccessState(favouritItemsList: r.data??[]));
+
+            });
   }
 
 

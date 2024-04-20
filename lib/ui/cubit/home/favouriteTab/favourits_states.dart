@@ -23,3 +23,11 @@ class ItemAddedErrorState extends FavouritsTabStates{
   String errorMsg;
   ItemAddedErrorState({required this.errorMsg});
 }
+class ItemDeletedSuccessfullyState extends FavouritsTabStates{
+  String successMsg;
+  ItemDeletedSuccessfullyState({required this.successMsg});
+}
+class ItemDeletedErrorState extends FavouritsTabStates{
+  String errorMsg;
+  ItemDeletedErrorState({required this.errorMsg});
+}

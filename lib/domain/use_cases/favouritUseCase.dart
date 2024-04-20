@@ -15,5 +15,8 @@ class FavouritUseCase{
   Future<Either<Failures,GetFavouritsTabResponseEntity>> GetFavouritsItems(){
     return registerRepositoryInterface.getFavouritsItems();
   }
+  Future<Either<Failures,AddToFavouritsResponseEntity>> deletItemFromFavs(String productID){
+    return registerRepositoryInterface.deleteItemFromFavs(productID);
+  }
 
 }

@@ -12,7 +12,11 @@ class CartItemDesignWidget extends StatelessWidget {
 
   GetCartItemsProducts cartItem;
   Function(String productID) onDeleteClickListener;
-  CartItemDesignWidget({required this.cartItem,required this.onDeleteClickListener});
+  Function(String productID,int newQuantity) onDecrementClickListener;
+  Function(String productID,int newQuantity) onIncrementClickListener;
+  int quantity=1;
+
+  CartItemDesignWidget({required this.cartItem,required this.onDeleteClickListener,required this.onDecrementClickListener,required this.onIncrementClickListener});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -44,9 +48,19 @@ class CartItemDesignWidget extends StatelessWidget {
                   Text("EGP ${cartItem.price}",style: TextStyle(color: AppColors.PrimaryColor,fontWeight: FontWeight.bold,fontSize: 18),),
                   Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(29.r),border: Border.all(color: AppColors.PrimaryColor),color: AppColors.PrimaryColor),
                     child: Row(children: [
-                      IconButton(onPressed: (){}, icon: Icon(Icons.remove_circle_outline,color: Colors.white,)),
+                      IconButton(onPressed: (){
+                        if(cartItem.count ==1){
+                          onDeleteClickListener(cartItem.product!.id!);
+                        }else{
+                          quantity=cartItem.count!.toInt()-1;
+                          onDecrementClickListener(cartItem.product!.id!,quantity);
+                        }
+                      }, icon: Icon(Icons.remove_circle_outline,color: Colors.white,)),
                       Text("${cartItem.count}",style: TextStyle(color: Colors.white,fontSize: 19),),
-                      IconButton(onPressed: (){}, icon: Icon(Icons.add_circle_outline,color: Colors.white,)),
+                      IconButton(onPressed: (){
+                        quantity=cartItem.count!.toInt()+1;
+                        onIncrementClickListener(cartItem.product!.id!,quantity);
+                      }, icon: Icon(Icons.add_circle_outline,color: Colors.white,)),
 
 
                     ],),)

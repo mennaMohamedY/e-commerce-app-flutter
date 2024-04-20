@@ -27,6 +27,10 @@ abstract class RegisterRepositoryInterface{
 
   Future<Either<Failures,AddToFavouritsResponseEntity>> AddToFavourits(String productID);
   Future<Either<Failures,GetFavouritsTabResponseEntity>> getFavouritsItems();
+  Future<Either<Failures,AddToFavouritsResponseEntity>> deleteItemFromFavs(String productID);
+
+  Future<Either<Failures,GetCartItemsResponseEntity>> updateCartItem(String productID,int newQuantity);
+
 
 
 

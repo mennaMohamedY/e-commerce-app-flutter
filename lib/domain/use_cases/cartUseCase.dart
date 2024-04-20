@@ -21,4 +21,8 @@ class CartUseCase{
   Future<Either<Failures,GetCartItemsResponseEntity>> deleteCartItem(String productID){
     return registerRepositoryInterface.deleteCartItem(productID);
   }
+
+  Future<Either<Failures,GetCartItemsResponseEntity>> updateCartItem(String productID,int newQuantity){
+    return registerRepositoryInterface.updateCartItem(productID,newQuantity);
+  }
 }

@@ -72,5 +72,15 @@ class RegisterRepositoryImpl extends RegisterRepositoryInterface{
   Future<Either<Failures, GetFavouritsTabResponseEntity>> getFavouritsItems() {
     return registerRemoteDataSourceInterface.getFavouritsItems();
   }
+
+  @override
+  Future<Either<Failures, AddToFavouritsResponseEntity>> deleteItemFromFavs(String productID) {
+    return registerRemoteDataSourceInterface.deleteItemFromFavs(productID);
+  }
+
+  @override
+  Future<Either<Failures, GetCartItemsResponseEntity>> updateCartItem(String productID, int newQuantity) {
+    return registerRemoteDataSourceInterface.updateCartItem(productID, newQuantity);
+  }
   
 }
